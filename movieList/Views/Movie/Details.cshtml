@@ -1,0 +1,21 @@
+﻿@model movieList.Models.Movie
+
+
+<div class="container">
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h2>@Model.Title</h2>
+			<p class="glyphicon glyphicon-time">@Html.DisplayFor(modelMovie => Model.Duration) minuten</p>
+		</div>
+		<div class="col-md-6">
+			<h3>Beschrijving</h3>
+			@Html.DisplayFor(modelMovie => Model.Description)
+		</div>
+		<div class="col-md-6">
+			<h3>Acteurs</h3>
+			<div>
+				@String.Join(", ", Model.Actors.Select(p => p.Name).ToArray())
+			</div>
+		</div>
+	</div>
+</div>

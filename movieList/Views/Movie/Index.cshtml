@@ -1,0 +1,51 @@
+﻿@model IList<movieList.Models.Movie>
+<h2>Films</h2>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="pull-right">
+				@using (Html.BeginForm("Index", "Movie", FormMethod.Post))
+				{
+					@Html.TextBox("search")
+					<input type="submit" value="Zoeken" id="submit" />
+				}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-xs-2 text-danger">
+				Titel
+			</div>
+			<div class="col-xs-6 text-danger">
+				Omschrijving
+			</div>
+			<div class="col-xs-2 text-danger">
+				Duur
+			</div>
+			<div class="col-xs-2 text-danger">
+				Acties
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		@foreach (var movie in Model)
+		{
+			<div class="row">
+				<div class="col-xs-2">
+					@Html.DisplayFor(modelMovie => movie.Title)
+				</div>
+				<div class="col-xs-6">
+					@Html.DisplayFor(modelMovie => movie.Description)
+				</div>
+				<div class="col-xs-2">
+					@Html.DisplayFor(modelMovie => movie.Duration) minuten
+				</div>
+				<div class="col-xs-2">
+					@Html.ActionLink("Details", "details", "Movie", new { id = movie.ID }, null)
+				</div>
+			</div>
+		}
+	</div>
+</div>
