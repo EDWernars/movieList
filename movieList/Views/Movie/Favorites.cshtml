@@ -1,7 +1,13 @@
-﻿@model IList<movieList.Models.Movie>
-<h2>Films</h2>
+﻿<h2>Favorieten films</h2>
 
-<div class="container">
+<script>
+	Object.keys(localStorage).forEach(function (key) {
+		var retrievedObject = localStorage.getItem(key);
+		console.log('retrievedObject: ', JSON.parse(retrievedObject));
+	});
+</script>
+
+@*<div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="pull-right">
@@ -48,6 +54,6 @@
 				</div>
 			</div>
 		}
-	</div>
+	</div>*@
 
 </div>

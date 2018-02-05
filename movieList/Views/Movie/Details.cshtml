@@ -5,7 +5,10 @@
 	<div class="col-md-12">
 		<div class="col-md-12">
 			<h2>@Model.Title</h2>
-			<p class="glyphicon glyphicon-time">@Html.DisplayFor(modelMovie => Model.Duration) minuten</p>
+			<p>
+				<span class="glyphicon glyphicon-time"></span>
+				@Html.DisplayFor(modelMovie => Model.Duration) minuten
+			</p>
 		</div>
 		<div class="col-md-6">
 			<h3>Beschrijving</h3>
@@ -19,3 +22,22 @@
 		</div>
 	</div>
 </div>
+<script>
+	if (typeof (Storage) !== "undefined") {
+		var urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.get("favorites") === "saved")
+			movie = {
+				"id": "@Model.ID",
+				"title": "@Model.Title",
+				"description": "@Model.Description",
+				"duration": "@Model.Duration",
+				"actors": {
+					@foreach (var actor in Model.Actors){
+						@:"id": "@actor.ID",
+						@:"name": "@actor.Name",
+					}
+				}
+			}
+		localStorage.setItem(@Model.ID, JSON.stringify(movie));
+	}
+</script>

@@ -35,7 +35,6 @@ namespace movieList.Controllers
 			movies.Add(new Movie(5, "The Lion King", "Dit is de beschrijving van The Lion King", 89,
 				actors.Where(x => x.ID == 1 || x.ID == 2 || x.ID == 6 || x.ID == 7).ToList()));
 		}
-
 		// GET: Movies
 		public ActionResult Index(string search)
 		{
@@ -57,6 +56,11 @@ namespace movieList.Controllers
 
 			// Return the object to the view.
 			return View(movie);
+		}
+		// GET: Movie
+		public ActionResult Favorites()
+		{
+			return View();
 		}
 	}
 }
