@@ -22,6 +22,7 @@ namespace movieList.Controllers
 			actors.Add(new Actor(5, "Sven"));
 			actors.Add(new Actor(6, "Sarah"));
 			actors.Add(new Actor(7, "Joep"));
+			actors.Add(new Actor(8, "Ella"));
 
 			// Add movies
 			movies.Add(new Movie(1, "Blade Runner 2049", "Dit is de beschrijving van Blade Runner", 163,
@@ -34,6 +35,8 @@ namespace movieList.Controllers
 				actors.Where(x => x.ID == 3 || x.ID == 4 || x.ID == 5 || x.ID == 6 || x.ID == 7).ToList()));
 			movies.Add(new Movie(5, "The Lion King", "Dit is de beschrijving van The Lion King", 89,
 				actors.Where(x => x.ID == 1 || x.ID == 2 || x.ID == 6 || x.ID == 7).ToList()));
+			movies.Add(new Movie(6, "LoveLess", "Dit is de beschrijving van The LoveLess", 142,
+			actors.Where(x => x.ID == 1 || x.ID == 2 || x.ID == 3 || x.ID == 4 || x.ID == 8).ToList()));
 		}
 		// GET: Movies
 		public ActionResult Index(string search)

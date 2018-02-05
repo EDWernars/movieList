@@ -1,59 +1,87 @@
-﻿<h2>Favorieten films</h2>
+﻿<h2>Favorieten</h2>
 
-<script>
-	Object.keys(localStorage).forEach(function (key) {
-		var retrievedObject = localStorage.getItem(key);
-		console.log('retrievedObject: ', JSON.parse(retrievedObject));
-	});
-</script>
-
-@*<div class="container">
+<div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="pull-right">
-				@using (Html.BeginForm("Index", "Movie", FormMethod.Post))
-				{
-					@Html.TextBox("search")
-					<input type="submit" value="Zoeken" id="submit" />
-				}
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="col-xs-2 text-danger">
+			<div class="col-xs-4 text-danger">
 				Titel
 			</div>
 			<div class="col-xs-6 text-danger">
 				Omschrijving
 			</div>
-			<div class="col-xs-2 text-danger">
-				Duur
-			</div>
-			<div class="col-xs-2 text-danger">
-				Acties
+			<div class="col-xs-2">
+				<a href="#" id="duration" class="desc">Duur</a>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-12">
-		@foreach (var movie in Model)
-		{
-			<div class="row">
-				<div class="col-xs-2">
-					@Html.DisplayFor(modelMovie => movie.Title)
-				</div>
-				<div class="col-xs-5">
-					@Html.DisplayFor(modelMovie => movie.Description)
-				</div>
-				<div class="col-xs-2">
-					@Html.DisplayFor(modelMovie => movie.Duration) minuten
-				</div>
-				<div class="col-xs-3">
-					@Html.ActionLink("Details", "details", "Movie", new { id = movie.ID }, null) |
-					@Html.ActionLink("Toevoegen aan favorieten", "details", "Movie", new { id = movie.ID, favorites = "saved" }, new { @class = "favorites" })
-				</div>
-			</div>
-		}
-	</div>*@
+		<div id="fav-movies">
 
+		</div>
+	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+		var moviesDuration = [];
+		var update = false;
+
+		ShowOnScreen(false);
+
+		$("#duration").click(function () {
+			var update = true;
+			// Changing class names and sort them in 2 directions (descending or ascending).
+			if ($('#duration').hasClass("desc")) {
+				$('#duration').addClass('asc');
+				$('#duration').removeClass('desc');
+				moviesDuration.sort(function (a, b) { return a[1] - b[1] });
+			} else {
+				$('#duration').addClass('desc');
+				$('#duration').removeClass('asc');
+				moviesDuration.sort(function (a, b) { return b[1] - a[1] });
+			}
+			console.log(moviesDuration);
+			ShowOnScreen(update);
+		});
+
+		// Function that loop through the array and find the object.
+		function ShowOnScreen(update) {
+			var i = 0;
+			var lengthOfArray = moviesDuration.length;
+			// Delete the data in fav-movies.
+			$('#fav-movies').html('');
+			// Search movie duration by object duration.
+			do {
+				Object.keys(localStorage).forEach(function (key) {
+					var retrievedObject = localStorage.getItem(key);
+					var movie = JSON.parse(retrievedObject);
+					// Check if screen needs to be updated.
+					if (update === true) {
+						// Search for a movie with the same duration.
+						if (moviesDuration[i][1] === movie.duration) {
+							// Check if the movie have the same movie id.
+							if (moviesDuration[i][0] === movie.id) {
+
+								// When found add the object into div id fav-movies.
+								$('#fav-movies').append('<div class="row"> ' +
+									'<div class="col-xs-4">' + movie.title + '</div>' +
+									'<div class="col-xs-6">' + movie.description + '</div>' +
+									'<div class="col-xs-2 duration">' + movie.duration + '</div>');
+							}
+						}
+					} else {
+						// Add them into div id fav-movies.
+						$('#fav-movies').append('<div class="row"> ' +
+							'<div class="col-xs-4">' + movie.title + '</div>' +
+							'<div class="col-xs-6">' + movie.description + '</div>' +
+							'<div class="col-xs-2 duration">' + movie.duration + '</div>');
+						// Add all duration in an array to sort them by duration.
+						moviesDuration.push([movie.id, movie.duration]);
+					}
+				});
+				i++;
+			}
+			while (i < lengthOfArray);
+		}
+	});
+</script>
