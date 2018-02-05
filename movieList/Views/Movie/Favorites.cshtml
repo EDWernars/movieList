@@ -50,8 +50,8 @@
 			var lengthOfArray = moviesDuration.length;
 			// Delete the data in fav-movies.
 			$('#fav-movies').html('');
-			// Search movie duration by object duration.
 			do {
+				// Loop through all objects that's in localStorage.
 				Object.keys(localStorage).forEach(function (key) {
 					var retrievedObject = localStorage.getItem(key);
 					var movie = JSON.parse(retrievedObject);
